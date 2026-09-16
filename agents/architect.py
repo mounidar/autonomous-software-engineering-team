@@ -1,7 +1,22 @@
-import json
+
 from openai import OpenAI
+from pydantic import BaseModel
 
+class Technology(BaseModel):
+    frontend: str
+    backend: str
+    database: str
 
+class Architecture(BaseModel):
+    overview: str
+    features: list[str]
+    technology: Technology
+    components: list[str]
+    api: list[str]
+    security: list[str]
+    testing: list[str]
+    deployment: list[str]
+    mvp: str
 class ArchitectAgent:
 
     def __init__(self):
@@ -30,15 +45,16 @@ Create a software architecture plan with these sections:
 9. deployment
 10. mvp
 
-Return the answer as JSON.
+Return the architecture according to the provided structured output schema.
 """
 
-        response = self.client.responses.create(
-            model="gpt-5.6",
-            input=prompt
-        )
+        response = self.client.responses.parse(
+           model="gpt-5.6",
+           input=prompt,
+           text_format=Architecture
+)
 
-        return json.loads(response.output_text)
+        return response.output_parsed
 
 
 if __name__ == "__main__":
@@ -52,7 +68,7 @@ The platform should allow users to:
 - create and configure AI agents
 - organize agents into teams
 - assign tasks to agents
-- monitor agent execution and statuspython 
+- monitor agent execution and status
 - manage agent roles and responsibilities
 - review agent outputs
 - track tasks, failures, and execution history.
@@ -60,4 +76,4 @@ The platform should allow users to:
 
     result = agent.analyze(task)
 
-    print(json.dumps(result, indent=2))
+    print(result.model_dump_json(indent=2))
