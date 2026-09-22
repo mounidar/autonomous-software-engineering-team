@@ -25,4 +25,5 @@ print()
 developer = DeveloperAgent()
 
 developer.analyze_architecture(architecture)
+developer.inspect_repository(".")
 
