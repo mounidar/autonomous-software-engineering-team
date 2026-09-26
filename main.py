@@ -26,4 +26,5 @@ developer = DeveloperAgent()
 
 developer.analyze_architecture(architecture)
 developer.inspect_repository(".")
+developer.read_repository_file("README.md")
 

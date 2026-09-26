@@ -1,4 +1,4 @@
-from tools.filesystem import list_files
+from tools.filesystem import list_files, read_file, write_file
 
 
 class DeveloperAgent:
@@ -22,3 +22,18 @@ class DeveloperAgent:
             print(file)
 
         return files
+
+    def read_repository_file(self, path):
+        content = read_file(path)
+
+        print(f"\nContents of {path}:")
+        print(content)
+
+        return content
+
+    def write_repository_file(self, path, content):
+        written_path = write_file(path, content)
+
+        print(f"\nDeveloper wrote file: {path}")
+
+        return written_path
